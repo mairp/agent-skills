@@ -1,0 +1,3 @@
+agent-skills
+*.pyc
+__pycache__/

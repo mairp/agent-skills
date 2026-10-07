@@ -1,0 +1,41 @@
+{
+  "skill_name": "spec-reconcile",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/spec-reconcile specs/002-extproc-data-path --against deploy/docker-compose.sovereign.yml --against sovereign-policy:/api/about --date 2026-09-17",
+      "expected_output": "A sheet at specs/002-extproc-data-path/reconciliation-2026-09-17.md, written from references/sheet-template.md with the fixed columns, whose rows include: the two disclosure ids appended in constitution v1.6.2 (exception_register_store, killswitch_store) as `holds`; the T409 task as `drifted` (the task row and the run index name only runs/live-t409-2026-09-13.md, while runs/live-t409-2026-09-13-2.md and -3.md also exist) or `holds` if all three run files are named; the `redact` sidecar of sidecars/classifier-igpu/docker-compose.yml as `holds` at rung 1 (002's contracts/health-and-doctor.md and contracts/live-runner.md name it) or `holds, undocumented` if no 002 artefact names it; and the `chat_template_kwargs` entry of config/lanes.yaml as owner 002 at rung 3 with 001, 002 and 003 recorded as rung-1 candidates. Nothing in the stack is mutated and no credential value appears in the sheet.",
+      "files": [
+        "specs/002-extproc-data-path/spec.md",
+        "specs/002-extproc-data-path/plan.md",
+        "specs/002-extproc-data-path/tasks.md",
+        "specs/002-extproc-data-path/contracts/",
+        "specs/002-extproc-data-path/runs/",
+        "specs/README.md",
+        ".specify/memory/constitution.md",
+        "deploy/docker-compose.sovereign.yml",
+        "sidecars/classifier-igpu/docker-compose.yml",
+        "config/lanes.yaml",
+        "services/policy/api/about.py"
+      ],
+      "assertions": [
+        "The run writes exactly one file, specs/002-extproc-data-path/reconciliation-2026-09-17.md, and writes nothing else in the repository (no task appended to specs/002-extproc-data-path/tasks.md).",
+        "The run issues no mutating command: no docker compose up/down/restart/build, no docker restart, no docker exec that writes, no test run against the stack. Only docker ps, docker inspect, docker logs --tail, docker exec ... cat <file>, curl to a health/about/version endpoint, git read verbs and file reads appear.",
+        "The sheet's table has exactly the columns: # | Claim (spec file:line, quoted) | Kind | Owner (spec id, rung) | Deployed fact (surface, how read, dated) | Verdict | Severity | Action.",
+        "Every Kind, Verdict, Severity and Action cell contains only a word from references/vocabulary.md.",
+        "There is a row for the disclosure id exception_register_store with verdict `holds`, citing the deployed DISCLOSURE_IDS list read from the running policy service (docker exec sovereign-policy cat of the file carrying DISCLOSURE_IDS, or GET /api/about with a person token from deploy/secrets/), dated 2026-09-17.",
+        "There is a row for the disclosure id killswitch_store with verdict `holds`, citing the same dated read.",
+        "No token, password or key material from deploy/secrets/ appears anywhere in the sheet or in the printed summary; the sheet names the credential by its location only.",
+        "There is a row for task T409 (specs/002-extproc-data-path/tasks.md:345) whose verdict is `drifted` when the task row and specs/002-extproc-data-path/runs/README.md together name only runs/live-t409-2026-09-13.md while runs/live-t409-2026-09-13-2.md and runs/live-t409-2026-09-13-3.md exist, and `holds` only if all three run files are named by the task row or the run index.",
+        "If the T409 row is `drifted`, its Deployed fact cell cites runs/live-t409-2026-09-13.md, the run where the claim did hold; if that citation could not be opened, the row would be `never held` instead.",
+        "There is a row for the `redact` service of sidecars/classifier-igpu/docker-compose.yml whose verdict is `holds` with Owner `002 (rung 1)` because specs/002-extproc-data-path/contracts/health-and-doctor.md and contracts/live-runner.md name the redact sidecar; it is `holds, undocumented` only if no 002 plan, tasks or contract names it.",
+        "There is a row for the chat_template_kwargs entry in the remove_when_non_default list of config/lanes.yaml, introduced by commit 68e766c whose subject is prefixed `config:` and carries no spec id.",
+        "That row's Owner cell reads `002 (rung 3; rung-1 candidates 001, 002, 003)` or an equivalent that names 002 as the owner at rung 3 and records 001, 002 and 003 as rung-1 candidates, because all three tasks.md name config/lanes.yaml.",
+        "The rung-3 justification cites the Completes column of specs/README.md, where 002 completes 001's M2 data path, so 002 owns the runtime behaviour of the lane while 001 keeps the schema.",
+        "The sheet header records the step-0 identifier-range check: task ids restart at T001 in every tasks.md and the FR ranges of 001, 002 and 003 overlap, so a bare task or FR number in a commit is not evidence at rung 2 for this run.",
+        "The sheet header lists each surface read with the exact command or file path that read it and the date 2026-09-17.",
+        "The run prints a ten-line summary naming the claim count, the count per verdict, the blocking rows by number and the path of the sheet."
+      ]
+    }
+  ]
+}
