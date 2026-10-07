@@ -23,7 +23,7 @@ for yours.
 | [qmd-recall](qmd-recall/) | Recall from and write to the shared fleet memory (qmd) — prior context, past decisions, durable gotchas for every agent on the host. |
 | [spec-reconcile](spec-reconcile/) | Read a spec folder and the deployed surfaces read-only, then write a dated spec-vs-deployed sheet in a fixed vocabulary. Ships a vocabulary, a sheet template, an ownership table and evals. |
 | [jupyter-pull](jupyter-pull/) | Download every file from a remote Jupyter server you are logged into (course labs, DLI, Coursera-style notebooks), given only the browser session cookie. |
-| [specstride-curate](specstride-curate/) | Curate and reconcile a Spec Kit spec corpus for a target host: deterministic backup + cross-artifact checks first, then research agents apply the curation prompt and refresh analyze reports. |
+| [specstride-curate](specstride-curate/) | Curate and reconcile a Spec Kit spec corpus for a target host — unattended end to end: auto-research agents verify the target host's extension facts and distill aesthetic references into cited briefs, a deterministic script backs up and cross-checks the corpus, then curation agents apply the retargeting rules and analyze reports are refreshed. |
 
 Companion repos: [gpu_rtx_3090](https://github.com/mairp/gpu_rtx_3090) (the GPU scripts
 gpu-ops drives), [qmd-gateway](https://github.com/mairp/qmd-gateway) (the memory gateway
