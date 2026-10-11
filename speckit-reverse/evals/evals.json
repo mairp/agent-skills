@@ -1,0 +1,71 @@
+{
+  "skill_name": "speckit-reverse",
+  "evals": [
+    {
+      "id": 1,
+      "name": "dirty-repo-dry-run",
+      "fixture": "tally-dirty",
+      "prompt": "I want spec kit artifacts for my repo at {FIXTURE} \u2014 it's a little word-count tool. Just do the dry run for now so I can see the plan, don't launch the actual run. Put any scratch copies or snapshots under {SNAPS}.",
+      "expected_output": "A frozen snapshot at the committed HEAD, a passing reverse dry run numbered 001, no launch, source untouched, and a report that says uncommitted changes were left out.",
+      "assertions": [
+        "no-run-launched",
+        "source-untouched",
+        "dry-run-on-snapshot-not-source",
+        "feature-numbered-001",
+        "report-addresses-uncommitted-changes",
+        "snapshot-at-committed-head",
+        "feature-named-after-project"
+      ],
+      "expected_slug": "tally"
+    },
+    {
+      "id": 2,
+      "name": "plain-dir-dry-run",
+      "fixture": "backup-tool",
+      "prompt": "{FIXTURE} is a folder (not a git repo) with some backup scripts. Can you reverse engineer it into speckit specs? For now only prepare everything and show me the dry run; don't start the LLM run. Scratch space: {SNAPS}",
+      "expected_output": "A snapshot copy made into its own git repo, node_modules excluded, a passing dry run, no launch, and no .git created in the source.",
+      "assertions": [
+        "no-run-launched",
+        "source-untouched",
+        "dry-run-on-snapshot-not-source",
+        "feature-numbered-001",
+        "node-modules-not-inventoried",
+        "feature-named-after-project"
+      ],
+      "expected_slug": "backup-tool"
+    },
+    {
+      "id": 3,
+      "name": "existing-specs-worktree-dry-run",
+      "fixture": "tally-specs",
+      "prompt": "reverse engineer {FIXTURE} into an as-is spec kit feature, and include my uncommitted changes. there are already a couple of features in specs/. dry run only please, no launch. use {SNAPS} for snapshots",
+      "expected_output": "A worktree snapshot containing the uncommitted edit, feature numbered 003, a passing dry run, no launch, source untouched.",
+      "assertions": [
+        "no-run-launched",
+        "source-untouched",
+        "dry-run-on-snapshot-not-source",
+        "feature-numbered-003",
+        "snapshot-includes-uncommitted-edit",
+        "feature-named-after-project"
+      ],
+      "expected_slug": "tally"
+    },
+    {
+      "id": 4,
+      "name": "live-full-run",
+      "fixture": "tally-clean",
+      "prompt": "Reverse-engineer {FIXTURE} into a complete as-is Spec Kit feature (all the artifacts) and bring it back into the repo's specs/. Run it for real. Use {SNAPS} for any snapshot or scratch copy. Don't commit anything.",
+      "expected_output": "All gates approved; the feature copied into fixture/specs and lint-clean at --upto 5; no commit in the source; snapshot clean apart from specs/ and .specstride/; spot-checks reported; a MoL draft contract derived from the as-is feature.",
+      "assertions": [
+        "all-gates-approved",
+        "feature-back-in-source-and-lint-clean",
+        "no-commit-in-source",
+        "snapshot-has-no-stray-files",
+        "report-has-spot-checks",
+        "mol-contract-generated",
+        "feature-named-after-project"
+      ],
+      "expected_slug": "tally"
+    }
+  ]
+}
