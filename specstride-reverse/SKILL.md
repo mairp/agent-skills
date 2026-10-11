@@ -1,5 +1,5 @@
 ---
-name: speckit-reverse
+name: specstride-reverse
 description: Reverse-engineer an existing codebase (a git repo, a dirty worktree, or a plain directory at a local path) into a complete as-is Spec Kit feature (constitution, spec, requirements checklist, plan, research, data model, contracts, quickstart and ticked tasks) with `specstride reverse`, then hand the result to mixture-of-loops as a launch-contract baseline. Use whenever someone wants Spec Kit / speckit artifacts, a spec, or a baseline "for what already exists", asks to "reverse engineer", "document as-is", "retro-spec", "specify an existing repo/project/folder", "bootstrap spec-kit for a legacy codebase", or wants Specstride or mixture-of-loops to run on a project that has no specs yet, even if they don't say "reverse".
 ---
 
@@ -73,7 +73,7 @@ words, and only then the directory name. `prepare` prints `slug` and `name_sourc
 name is generic (`src`, `app`, `work`, `fixture`, a date): read the README or code for the real
 name. Say in the report where the name came from.
 
-Snapshots default to `~/speckit-reverse/<slug>-<sha7>/` (`--root` or `SPECKIT_REVERSE_ROOT`
+Snapshots default to `~/specstride-reverse/<slug>-<sha7>/` (`--root` or `SPECSTRIDE_REVERSE_ROOT`
 overrides; it must be outside the source). `EXTRA_FLAGS` pass through to `specstride reverse`
 (e.g. `--proposer`, `--critic`, `--max-rejects`) — only when the user asked for them; otherwise
 Specstride's own `.env` defaults choose the models.

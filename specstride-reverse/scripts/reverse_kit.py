@@ -30,7 +30,7 @@ from pathlib import Path
 
 SKIP_DIRS = {".git", "node_modules", ".venv", "venv", "__pycache__", "dist", "build",
              ".tox", ".mypy_cache", ".pytest_cache", ".specstride", "target", ".next"}
-SNAP_IDENT = ["-c", "user.name=speckit-reverse", "-c", "user.email=snapshot@speckit-reverse.local",
+SNAP_IDENT = ["-c", "user.name=specstride-reverse", "-c", "user.email=snapshot@specstride-reverse.local",
               "-c", "commit.gpgsign=false"]
 
 
@@ -149,7 +149,7 @@ def snapshot(src: Path, work: Path, mode: str) -> dict:
                     (work / rel).unlink()
             git(["add", "-A"], work)
             if git(["status", "--porcelain"], work).strip():
-                git(["commit", "-q", "-m", f"speckit-reverse worktree snapshot of {src}"], work)
+                git(["commit", "-q", "-m", f"specstride-reverse worktree snapshot of {src}"], work)
         info["snapshot_mode"] = mode
     else:
         # plain directory, or a subdirectory of a repo: copy the files, then make it a repo
@@ -167,7 +167,7 @@ def snapshot(src: Path, work: Path, mode: str) -> dict:
             info["snapshot_mode"] = "plain"
         git(["init", "-q"], work)
         git(["add", "-A"], work)          # honours any copied .gitignore
-        git(["commit", "-q", "--allow-empty", "-m", f"speckit-reverse snapshot of {src}"], work)
+        git(["commit", "-q", "--allow-empty", "-m", f"specstride-reverse snapshot of {src}"], work)
     info["sha"] = git(["rev-parse", "HEAD"], work).strip()
     if git(["status", "--porcelain"], work).strip():
         die(f"snapshot {work} is not clean after creation")
@@ -473,7 +473,7 @@ def main() -> None:
     pr.add_argument("--snapshot", default="auto",
                     help="auto (=head for a repo root) | head | worktree | ref:REF")
     pr.add_argument("--tasks", default="done", choices=("done", "open"))
-    pr.add_argument("--root", default=os.environ.get("SPECKIT_REVERSE_ROOT", str(Path.home() / "speckit-reverse")))
+    pr.add_argument("--root", default=os.environ.get("SPECSTRIDE_REVERSE_ROOT", str(Path.home() / "specstride-reverse")))
     pr.add_argument("extra", nargs="*", help="after --: extra `specstride reverse` launch flags")
     pr.set_defaults(fn=cmd_prepare)
     for name, fn in (("launch", cmd_launch), ("verify", cmd_verify), ("bring-back", cmd_bring_back)):
